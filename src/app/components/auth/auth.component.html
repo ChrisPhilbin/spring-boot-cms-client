@@ -1,0 +1,54 @@
+<div class="flex h-screen justify-center items-center">
+  <div class="block w-[320px] mx-auto">
+    <form
+      (ngSubmit)="submitAuth()"
+      #authForm="ngForm"
+      class="mt-5 ml-0 pt-7 pb-8 px-6 overflow-hidden bg-white border-2 border-slate-300 drop-shadow"
+    >
+      <p>
+        <label for="username" class="text-gray-800"
+          >Username or Email Address</label
+        >
+        <input
+          class="mt-2 mb-4 border-2 border-zinc-200 rounded p-2"
+          required
+          type="text"
+          [(ngModel)]="userName"
+          name="userName"
+          id="userName"
+          value
+          size="20"
+          autocapitalize="off"
+          autocomplete="username"
+        />
+      </p>
+
+      <p>
+        <label for="password" class="text-gray-800">Password</label>
+        <input
+          class="mt-2 mb-4 border-2 border-zinc-200 rounded p-2"
+          required
+          [(ngModel)]="password"
+          type="password"
+          name="password"
+          id="password"
+          value
+          size="20"
+          autocomplete="current-password"
+        />
+      </p>
+
+      <p>
+        <input
+          type="submit"
+          class="bg-blue-500 text-white rounded p-2 float-right cursor-pointer"
+          value="Log In"
+        />
+      </p>
+
+      <p class="text-red-600 text-sm" *ngIf="hasErrors">
+        An error occured!<br />Please try again.
+      </p>
+    </form>
+  </div>
+</div>
