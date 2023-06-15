@@ -15,13 +15,5 @@ export class AppComponent implements OnInit {
     private cookieService: CookieService
   ) {}
 
-  ngOnInit(): void {
-    this.authService.token$.subscribe((token) => {
-      if (!token) {
-        if (this.cookieService.check('token')) {
-          this.authService.token$.next(this.cookieService.get('token'));
-        }
-      }
-    });
-  }
+  ngOnInit(): void {}
 }

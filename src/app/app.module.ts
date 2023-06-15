@@ -9,9 +9,10 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { PostIndexComponent } from './components/post/post-index/post-index.component';
 
 @NgModule({
-  declarations: [AppComponent, AuthComponent],
+  declarations: [AppComponent, AuthComponent, PostIndexComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
