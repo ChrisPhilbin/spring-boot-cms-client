@@ -40,6 +40,7 @@ export class AuthGuardService {
 
     if (cookieToken && !this.token) {
       this.authService.token$.next(cookieToken);
+      this.authService.isLoggedIn$.next(true);
     }
 
     return true;
