@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class AuthService {
+  public token$ = new BehaviorSubject<string | null>(null);
   public user$ = new BehaviorSubject<IUser | null>(null);
   public isLoggedIn$ = new BehaviorSubject<boolean>(false);
   public hasAuthErrors$ = new BehaviorSubject<boolean>(false);
@@ -44,6 +45,7 @@ export class AuthService {
             if (token) {
               this.isLoginLoading$.next(false);
               this.isLoggedIn$.next(true);
+              this.token$.next(token);
               this.cookieService.set('token', token);
               this.router.navigate(['/']);
             }
