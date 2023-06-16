@@ -9,7 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class PostIndexComponent implements OnInit {
   isLoggedIn: boolean = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(public authService: AuthService) {}
 
   ngOnInit(): void {
     this.authService.isLoggedIn$.subscribe((isUserLoggedIn) => {

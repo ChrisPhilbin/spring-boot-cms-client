@@ -22,6 +22,14 @@ export class AuthService {
     private router: Router
   ) {}
 
+  logout() {
+    this.cookieService.delete('token', '/');
+    this.token$.next(null);
+    this.user$.next(null);
+    this.isLoggedIn$.next(false);
+    this.router.navigate(['/auth']);
+  }
+
   login(userName: string, password: string) {
     this.hasAuthErrors$.next(false);
     this.isLoginLoading$.next(true);

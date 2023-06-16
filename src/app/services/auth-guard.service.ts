@@ -24,21 +24,23 @@ export class AuthGuardService {
   canActivate(): boolean {
     const cookieToken: string | null = this.cookieService.get('token');
 
-    if (!cookieToken || this.jwtHelper.isTokenExpired(cookieToken)) {
+    if (!cookieToken) {
+      setTimeout(() => {
+        this.router.navigate(['/auth'], {
+          queryParams: {
+            sessionExpired: 'true',
+          },
+        });
+      }, 300);
+      return false;
+    }
+
+    if (this.jwtHelper.isTokenExpired(cookieToken)) {
       setTimeout(() => {
         this.router.navigate(['/auth']);
       }, 300);
       return false;
     }
-
-    // if (this.jwtHelper.isTokenExpired(cookieToken)) {
-    //   setTimeout(() => {
-    //     this.router.navigate(['/auth']);
-    //   }, 300);
-    //   return false;
-    // }
-
-    console.log(this.token, 'value of token from auth guard');
 
     if (cookieToken && !this.token) {
       this.authService.token$.next(cookieToken);

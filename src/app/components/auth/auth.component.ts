@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -12,8 +13,12 @@ export class AuthComponent implements OnInit {
   password: string = '';
   confirmPassword: string = '';
   hasErrors: boolean = false;
+  isSessionExpired: boolean = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.authService.hasAuthErrors$.subscribe((authErrors) => {
@@ -22,6 +27,10 @@ export class AuthComponent implements OnInit {
       }
       this.hasErrors = authErrors;
     });
+    this.isSessionExpired =
+      this.route.snapshot.queryParamMap.get('sessionExpired') === 'true'
+        ? true
+        : false;
   }
 
   submitAuth() {

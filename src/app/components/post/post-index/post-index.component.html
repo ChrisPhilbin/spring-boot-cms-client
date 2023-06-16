@@ -1,3 +1,7 @@
-<p *ngIf="isLoggedIn; else notLoggedIn">The user is logged in!</p>
+<p *ngIf="isLoggedIn; else notLoggedIn">
+  The user is logged in!
+
+  <button (click)="authService.logout()">Logout</button>
+</p>
 
 <ng-template #notLoggedIn> The user is NOT logged in! </ng-template>
