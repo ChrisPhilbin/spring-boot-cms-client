@@ -11,8 +11,8 @@ import { CookieService } from 'ngx-cookie-service';
 export class PostService {
   posts$ = new BehaviorSubject<IPost[]>([]);
   post$ = new BehaviorSubject<IPost | null>(null);
-  isPostLoading = new BehaviorSubject<boolean>(false);
-  postHasErrors = new BehaviorSubject<boolean>(false);
+  isPostLoading$ = new BehaviorSubject<boolean>(false);
+  postHasErrors$ = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient, private cookieService: CookieService) {}
 
@@ -27,13 +27,14 @@ export class PostService {
   }
 
   getAllPosts(): void {
-    this.isPostLoading.next(true);
+    this.isPostLoading$.next(true);
     this.http.get<IPost[]>(`${environment.baseUrl}/post/all`).subscribe({
       next: (posts: IPost[]) => {
-        this.isPostLoading.next(false);
+        this.isPostLoading$.next(false);
         this.posts$.next(posts);
       },
-      error: (error) => {
+      error: (error: Error) => {
+        this.isPostLoading$.next(false);
         this.handlePostError(error);
       },
     });
@@ -83,7 +84,7 @@ export class PostService {
 
   handlePostError(error: Error) {
     console.error(error);
-    this.isPostLoading.next(false);
-    this.postHasErrors.next(true);
+    this.isPostLoading$.next(false);
+    this.postHasErrors$.next(true);
   }
 }

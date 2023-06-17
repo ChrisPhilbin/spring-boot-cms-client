@@ -11,6 +11,8 @@ import { PostService } from 'src/app/services/post.service';
 export class PostIndexComponent implements OnInit {
   isLoggedIn: boolean = false;
   posts: IPost[] = [];
+  isLoading: boolean = false;
+  hasErrors: boolean = false;
 
   constructor(
     public authService: AuthService,
@@ -24,7 +26,14 @@ export class PostIndexComponent implements OnInit {
 
     this.postService.posts$.subscribe((posts) => {
       this.posts = posts;
-      console.log(this.posts, 'all posts');
+    });
+
+    this.postService.isPostLoading$.subscribe((isLoading) => {
+      this.isLoading = isLoading;
+    });
+
+    this.postService.postHasErrors$.subscribe((hasErrors) => {
+      this.hasErrors = hasErrors;
     });
 
     this.postService.getAllPosts();
