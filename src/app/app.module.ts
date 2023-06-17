@@ -11,9 +11,10 @@ import { CookieService } from 'ngx-cookie-service';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { PostIndexComponent } from './components/post/post-index/post-index.component';
 import { ViewPostComponent } from './components/post/view-post/view-post.component';
+import { LoadingComponent } from './components/shared/loading/loading.component';
 
 @NgModule({
-  declarations: [AppComponent, AuthComponent, PostIndexComponent, ViewPostComponent],
+  declarations: [AppComponent, AuthComponent, PostIndexComponent, ViewPostComponent, LoadingComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

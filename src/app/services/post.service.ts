@@ -27,6 +27,7 @@ export class PostService {
   }
 
   getAllPosts(): void {
+    this.postHasErrors$.next(false);
     this.isPostLoading$.next(true);
     this.http.get<IPost[]>(`${environment.baseUrl}/post/all`).subscribe({
       next: (posts: IPost[]) => {
