@@ -5,3 +5,5 @@
 </p>
 
 <ng-template #notLoggedIn> The user is NOT logged in! </ng-template>
+
+<app-view-post *ngFor="let post of posts" [post]="post"></app-view-post>

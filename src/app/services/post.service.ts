@@ -3,17 +3,18 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { IPost } from '../models/post.model';
 import { environment } from 'src/environments/environment';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PostService {
-  posts = new BehaviorSubject<IPost[]>([]);
-  post = new BehaviorSubject<IPost | null>(null);
+  posts$ = new BehaviorSubject<IPost[]>([]);
+  post$ = new BehaviorSubject<IPost | null>(null);
   isPostLoading = new BehaviorSubject<boolean>(false);
   postHasErrors = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cookieService: CookieService) {}
 
   createPostInProvidedCategory(newPost: IPost, categoryId: string): void {
     this.http
@@ -21,16 +22,16 @@ export class PostService {
         newPost,
       })
       .subscribe((post: IPost) => {
-        this.post.next(post);
+        this.post$.next(post);
       });
   }
 
   getAllPosts(): void {
     this.isPostLoading.next(true);
-    this.http.get<IPost[]>(`${environment.baseUrl}/posts/all`).subscribe({
+    this.http.get<IPost[]>(`${environment.baseUrl}/post/all`).subscribe({
       next: (posts: IPost[]) => {
         this.isPostLoading.next(false);
-        this.posts.next(posts);
+        this.posts$.next(posts);
       },
       error: (error) => {
         this.handlePostError(error);
@@ -42,7 +43,7 @@ export class PostService {
     this.http
       .get<IPost>(`${environment.baseUrl}/post/${postId}`)
       .subscribe((post: IPost) => {
-        this.post.next(post);
+        this.post$.next(post);
       });
   }
 
@@ -50,7 +51,7 @@ export class PostService {
     this.http
       .get<IPost[]>(`${environment.baseUrl}/category/${categoryId}/all`)
       .subscribe((posts: IPost[]) => {
-        this.posts.next(posts);
+        this.posts$.next(posts);
       });
   }
 
@@ -60,7 +61,7 @@ export class PostService {
         updatedPost,
       })
       .subscribe((post: IPost) => {
-        this.post.next(post);
+        this.post$.next(post);
       });
   }
 
@@ -69,13 +70,13 @@ export class PostService {
       .delete<HttpResponseBase>(`${environment.baseUrl}/post/${postId}`)
       .subscribe((response) => {
         if (response.ok) {
-          const postArr: IPost[] = this.posts.getValue();
+          const postArr: IPost[] = this.posts$.getValue();
           postArr.forEach((post: IPost, index: number) => {
             if (post.id === postId) {
               postArr.splice(index, 1);
             }
           });
-          this.posts.next(postArr);
+          this.posts$.next(postArr);
         }
       });
   }

@@ -10,9 +10,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { PostIndexComponent } from './components/post/post-index/post-index.component';
+import { ViewPostComponent } from './components/post/view-post/view-post.component';
 
 @NgModule({
-  declarations: [AppComponent, AuthComponent, PostIndexComponent],
+  declarations: [AppComponent, AuthComponent, PostIndexComponent, ViewPostComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
