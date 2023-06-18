@@ -25,6 +25,7 @@ export class AuthGuardService {
     const cookieToken: string | null = this.cookieService.get('token');
 
     if (!cookieToken) {
+      this.cookieService.delete('token', '/');
       setTimeout(() => {
         this.router.navigate(['/auth'], {
           queryParams: {
@@ -36,6 +37,7 @@ export class AuthGuardService {
     }
 
     if (this.jwtHelper.isTokenExpired(cookieToken)) {
+      this.cookieService.delete('token', '/');
       setTimeout(() => {
         this.router.navigate(['/auth']);
       }, 300);
