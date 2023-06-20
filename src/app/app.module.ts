@@ -13,6 +13,7 @@ import { PostIndexComponent } from './components/post/post-index/post-index.comp
 import { ViewPostComponent } from './components/post/view-post/view-post.component';
 import { LoadingComponent } from './components/shared/loading/loading.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { ViewCategoryComponent } from './components/category/view-category/view-category.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
     PostIndexComponent,
     ViewPostComponent,
     LoadingComponent,
+    ViewCategoryComponent,
   ],
   imports: [
     BrowserModule,
